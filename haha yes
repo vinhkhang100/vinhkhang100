@@ -24,7 +24,7 @@ local Credits = Creditse:NewSection("Haha yes")
 Credits:NewLabel("bianhquan12345: Tester and helper")
 Credits:NewLabel("vinhkhang100: Others")
 Credits:NewButton("Copy discord link", "fuck (:", function ()
-	setclipboard("https://discord.gg/yEBheZxfN7")
+	setclipboard("https://discord.gg/Wqga33pVdB")
 end)
 local value = Instance.new("NumberValue",game.Workspace)
 value.Name = "CheckT"
