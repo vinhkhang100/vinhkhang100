@@ -18,6 +18,14 @@ local Game = Window:NewTab("Game")
 local MurderP = Game:NewSection("Murder Party")
 local AutoF = false
 local AutoFTele = false
+local ExpFarm = false
+local Creditse = Window:NewTab("Credits")
+local Credits = Creditse:NewSection("Haha yes")
+Credits:NewLabel("bianhquan12345: Tester and helper")
+Credits:NewLabel("vinhkhang100: Others")
+Credits:NewButton("Copy discord link", "fuck (:", function ()
+	setclipboard("https://discord.gg/yEBheZxfN7")
+end)
 local value = Instance.new("NumberValue",game.Workspace)
 value.Name = "CheckT"
 
@@ -30,48 +38,49 @@ MurderP:NewToggle("Auto collect coins", "sdadsa", function(state)
 end)
 game.Workspace.Time.Changed:Connect(function()
 	if game.Workspace.Time.Value == 119 then
-		if AutoF == true then
+		
 safePlace = Instance.new("Part",game.Workspace)
 safePlace.Anchored = true
 safePlace.Size = Vector3.new(6,1,6)
 safePlace.CFrame = CFrame.new(game.Players.LocalPlayer.character.HumanoidRootPart.Position) + Vector3.new(0,150,0)
-game.Players.LocalPlayer.character.HumanoidRootPart.CFrame = CFrame.new(safePlace.Position)+Vector3.new(0,4,0)
 
-
-
+if AutoF == true then
+	game.Players.LocalPlayer.character.HumanoidRootPart.CFrame = CFrame.new(safePlace.Position)+Vector3.new(0,4,0)
+repeat
 			for i,v in pairs(game.Workspace.Gems:GetDescendants()) do
 				if v.Name == "TouchInterest" then
 				firetouchinterest(game.Players.LocalPlayer.Character.Head, v.Parent,0)
 				wait()
 				end
 				end
-game.Players.LocalPlayer.character.Humanoid:EquipTool(game.Players.LocalPlayer.Backpack["0"])
+until game.Players.LocalPlayer.MatchCurrency.Value == 15
 
-for i,v in pairs(game.Players.LocalPlayer.Backpack:GetDescendants()) do
-	 if v.Name == "ClientKnife" then
-		for index,value in pairs(game.Workspace.GetChildren()) do
-	 
-		if value:FindFirstChild("Humanoid") and value.Name ~= game.Players.LocalPlayer.Name then
-			game.Players.LocalPlayer.character.HumanoidRootPart.CFrame = CFrame.new(value.HumanoidRootPart.Position)
-			kill(game.Players[value])
-		end
-	end
-end
-		end
+
 
 	end
 end
-
 end)
-MurderP:NewButton("Unlock all missions", "sssd", function()
-    for i,v in pairs(game.Players.LocalPlayer.Missions:GetDescendants()) do
-if v.Name == "Collected" then
-v.Value = true
-end
-end
+local InfJUmp = false
+MurderP:NewToggle("Inf jump", "haha yes?", function(state)
+    if state then
+        InfJUmp = true
+    else
+       InfJUmp = false
+    end
+end)
+game:GetService("UserInputService").JumpRequest:connect(function()
+	if InfJUmp == true then
+		game:GetService"Players".LocalPlayer.Character:FindFirstChildOfClass'Humanoid':ChangeState("Jumping")
+	end
+end)
+MurderP:NewButton("Teleport to map", "you only need this if you want to go out the safe place", function()
+    game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(12, 1210, 43)
+end)
+MurderP:NewButton("Teleport to safe place", "haha yes", function ()
+	game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(safePlace.Position) + Vector3.new(0,3,0)
 end)
 MurderP:NewButton("Collect coins", "this will auto collect coins for u", function()
-	for i,v in pairs(haha) do
+	for i,v in pairs(game.Workspace.Gems:GetDescendants()) do
 		if v.Name == "TouchInterest" then
 		firetouchinterest(game.Players.LocalPlayer.Character.Head, v.Parent,0)
 		wait(0.05)
@@ -80,11 +89,28 @@ MurderP:NewButton("Collect coins", "this will auto collect coins for u", functio
 		end
 
 end)
-MurderP:NewButton("Noclip", "haha", function()
-    game:GetService("RunService").Stepped:Connect(function()
-    game.Players.LocalPlayer.Character.Humanoid:ChangeState(11)
-    end)
+MurderP:NewToggle("Xp Farm(team chaos only)","the exp farm is still beta", function (state)
+	if state then
+		ExpFarm = true
+	else
+		ExpFarm = false
+	end
 end)
+game.Players.LocalPlayer.MatchCurrency.Changed:Connect(function ()
+	if game.Players.LocalPlayer.MatchCurrency.Value == 15 then
+		if ExpFarm == true then
+			game.Players.LocalPlayer.character.Humanoid:EquipTool(game.Players.LocalPlayer.Backpack["0"])
+
+		end
+	end
+end)
+local noclip = false
+ game:GetService("RunService").Stepped:Connect(function()
+if noclip then
+    game.Players.LocalPlayer.Character.Humanoid:ChangeState(11)
+end
+    end)
+
 MurderP:NewButton("Esp", "haha yes", function()
 
 --- Tut
